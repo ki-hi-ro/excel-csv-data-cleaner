@@ -151,13 +151,15 @@ for file in files:
     # 5-5. 正常データとエラーデータに分ける
     # --------------------------------------------------------
 
+    # エラーデータ（エラー内容列を残す）
     error_rows = df[
         df["エラー内容"] != ""
-    ]
+    ].copy()
 
+    # 正常データ（エラー内容列を削除する）
     normal_rows = df[
         df["エラー内容"] == ""
-    ]
+    ].drop(columns=["エラー内容"]).copy()
 
 
     # --------------------------------------------------------
@@ -175,6 +177,8 @@ for file in files:
     if error_rows.empty:
         print("エラーはありません。")
     else:
+        pd.set_option("display.unicode.east_asian_width", True)
+        
         print(error_rows.to_string(index=False))
 
 
